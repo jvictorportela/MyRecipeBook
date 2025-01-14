@@ -1,16 +1,34 @@
-﻿using MyRecipeBook.Application.Services.AutoMapper;
+﻿using AutoMapper;
 using MyRecipeBook.Application.Services.Cryptography;
 using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Communication.Responses;
+using MyRecipeBook.Domain.Repositories;
 using MyRecipeBook.Domain.Repositories.User;
 using MyRecipeBook.Exceptions.ExceptionsBase;
 
 namespace MyRecipeBook.Application.UseCases.User.Register;
 
-public class RegisterUserUseCase
+public class RegisterUserUseCase : IRegisterUserUseCase
 {
     private readonly IUserWriteOnlyRepository _writeRepository;
     private readonly IUserReadOnlyRepository _readRepository;
+    private readonly IMapper _mapper;
+    private readonly PasswordEncrypter _passwordEncrypter;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public RegisterUserUseCase(
+        IUserWriteOnlyRepository writeRepository, 
+        IUserReadOnlyRepository readRepository, 
+        IMapper mapper,
+        PasswordEncrypter passwordEncrypter,
+        IUnitOfWork unitOfWork)
+    {
+        _writeRepository = writeRepository;
+        _readRepository = readRepository;
+        _mapper = mapper;
+        _passwordEncrypter = passwordEncrypter;
+        _unitOfWork = unitOfWork;
+    }
 
     public async Task<ResponseRegisteredUserJson> Execute(RequestRegisterUserJson request)
     {
@@ -18,19 +36,14 @@ public class RegisterUserUseCase
         Validate(request);
 
         //Mapear a request em uma entidade
-        var autoMapper = new AutoMapper.MapperConfiguration(options =>
-        {
-            options.AddProfile(new AutoMapping());
-        }).CreateMapper();
-
-        var user = autoMapper.Map<Domain.Entities.User>(request);
+        var user = _mapper.Map<Domain.Entities.User>(request);
 
         //Criptografar a senha
-        var passwordCriptography = new PasswordEncrypter();
-        user.Password = passwordCriptography.Encrypt(request.Password);
+        user.Password = _passwordEncrypter.Encrypt(request.Password);
 
         //Salvar no banco de dados
         await _writeRepository.Add(user);
+        await _unitOfWork.Commit();
 
         return new ResponseRegisteredUserJson
         {
