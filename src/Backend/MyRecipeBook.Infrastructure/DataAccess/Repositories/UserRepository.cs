@@ -19,14 +19,6 @@ public class UserRepository : IUserReadOnlyRepository, IUserWriteOnlyRepository
 
     public async Task<bool> ExistActiveUserWithEmail(string email)
     {
-        try
-        {
-            return await _context.Users.AnyAsync(u => u.Email.Equals(email) && u.Active);
-        }
-        catch (Exception ex)
-        {
-
-            throw new Exception(ex.Message);
-        }
+        return await _context.Users.AnyAsync(u => u.Email.Equals(email) && u.Active);
     }
 }
