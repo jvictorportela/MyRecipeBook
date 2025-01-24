@@ -4,6 +4,7 @@ using MyRecipeBook.Communication.Requests;
 using MyRecipeBook.Communication.Responses;
 using MyRecipeBook.Domain.Repositories;
 using MyRecipeBook.Domain.Repositories.User;
+using MyRecipeBook.Domain.Security.Tokens;
 using MyRecipeBook.Exceptions;
 using MyRecipeBook.Exceptions.ExceptionsBase;
 
@@ -14,6 +15,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
     private readonly IUserWriteOnlyRepository _writeRepository;
     private readonly IUserReadOnlyRepository _readRepository;
     private readonly IMapper _mapper;
+    private readonly IAccessTokenGenerator _accessTokenGenerator;
     private readonly PasswordEncrypter _passwordEncrypter;
     private readonly IUnitOfWork _unitOfWork;
 
@@ -21,12 +23,14 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         IUserWriteOnlyRepository writeRepository, 
         IUserReadOnlyRepository readRepository, 
         IMapper mapper,
+        IAccessTokenGenerator accessTokenGenerator,
         PasswordEncrypter passwordEncrypter,
         IUnitOfWork unitOfWork)
     {
         _writeRepository = writeRepository;
         _readRepository = readRepository;
         _mapper = mapper;
+        _accessTokenGenerator = accessTokenGenerator;
         _passwordEncrypter = passwordEncrypter;
         _unitOfWork = unitOfWork;
     }
@@ -41,6 +45,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 
         //Criptografar a senha
         user.Password = _passwordEncrypter.Encrypt(request.Password);
+        user.UserIdentifier = Guid.NewGuid();
 
         //Salvar no banco de dados
         await _writeRepository.Add(user);
@@ -48,7 +53,11 @@ public class RegisterUserUseCase : IRegisterUserUseCase
 
         return new ResponseRegisteredUserJson
         {
-            Name = request.Name
+            Name = request.Name,
+            Tokens = new ResponseTokensJson
+            {
+                AccessToken = _accessTokenGenerator.Generate(user.UserIdentifier)
+            }
         };
     }
 
