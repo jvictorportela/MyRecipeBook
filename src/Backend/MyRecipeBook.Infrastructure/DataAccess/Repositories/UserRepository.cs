@@ -13,7 +13,7 @@ public class UserRepository : IUserReadOnlyRepository, IUserWriteOnlyRepository
         _context = context;
     }
 
-    public async Task Add(Domain.Entities.User user)
+    public async Task Add(User user)
     {
         await _context.Users.AddAsync(user);
     }
