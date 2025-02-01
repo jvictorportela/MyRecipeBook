@@ -63,9 +63,9 @@ namespace MyRecipeBook.Exceptions {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Email already registered!.
         /// </summary>
-        public static string EMAIL_ALTREADY_REGISTERED {
+        public static string EMAIL_ALLREADY_REGISTERED {
             get {
-                return ResourceManager.GetString("EMAIL_ALTREADY_REGISTERED", resourceCulture);
+                return ResourceManager.GetString("EMAIL_ALLREADY_REGISTERED", resourceCulture);
             }
         }
         
