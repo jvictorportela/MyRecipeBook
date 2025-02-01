@@ -70,7 +70,7 @@ public class RegisterUserUseCase : IRegisterUserUseCase
         var emailExist = await _readRepository.ExistActiveUserWithEmail(request.Email);
 
         if (emailExist)
-            result.Errors.Add(new FluentValidation.Results.ValidationFailure(string.Empty, ResourceMessagesExceptions.EMAIL_ALTREADY_REGISTERED));
+            result.Errors.Add(new FluentValidation.Results.ValidationFailure(string.Empty, ResourceMessagesExceptions.EMAIL_ALLREADY_REGISTERED));
 
         if (!result.IsValid)
         {
