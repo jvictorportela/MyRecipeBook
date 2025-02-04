@@ -41,4 +41,17 @@ public class UserController : MyRecipeBookBaseController
 
         return NoContent();
     }
+
+    [HttpPut("change-password")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorJson), StatusCodes.Status400BadRequest)]
+    [AuthenticatedUser]
+    public async Task<IActionResult> ChangePassword(
+       [FromServices] IChangePasswordUseCase useCase,
+       [FromBody] RequestChangePasswordJson request)
+    {
+        await useCase.Execute(request);
+
+        return NoContent();
+    }
 }
