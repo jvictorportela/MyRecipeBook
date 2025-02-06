@@ -147,6 +147,9 @@
   <data name="PASSWORD_LENGTH" xml:space="preserve">
     <value>A senha deve conter 6 ou mais caractéres.</value>
   </data>
+  <data name="TEST" xml:space="preserve">
+    <value>TESTE REQUEST</value>
+  </data>
   <data name="UNKNOWN_ERROR" xml:space="preserve">
     <value>Erro desconhecido.</value>
   </data>
