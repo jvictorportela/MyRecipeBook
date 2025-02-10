@@ -9,9 +9,9 @@ public class GetUserProfileUseCase : IGetUserProfileUseCase
     private readonly ILoggedUser _loggedUser;
     private readonly IMapper _mapper;
 
-    public GetUserProfileUseCase(ILoggedUser loggedUser, IMapper mapper)
+    public GetUserProfileUseCase(ILoggedUser loggedUserr, IMapper mapper)
     {
-        _loggedUser = loggedUser;
+        _loggedUser = loggedUserr;
         _mapper = mapper;
     }
 
