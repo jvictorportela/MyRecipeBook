@@ -50,7 +50,5 @@ public class ChangePasswordUseCase : IChangePasswordUseCase
 
         if (currentPasswordEncrypted.Equals(loggedUser.Password).IsFalse())
             result.Errors.Add(new FluentValidation.Results.ValidationFailure(string.Empty,ResourceMessagesExceptions.PASSWORD_DIFFERENT_CURRENT_PASSWORD));
-
-
     }
 }
