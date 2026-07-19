@@ -129,4 +129,7 @@
   <data name="VALIDATION_IS_VALID_EMAIL" xml:space="preserve">
     <value>Oops! Invalid email.</value>
   </data>
+  <data name="UNKNOWN_ERROR" xml:space="preserve">
+    <value>Unknown error.</value>
+  </data>
 </root>
