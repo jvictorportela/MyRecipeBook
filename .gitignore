@@ -193,3 +193,14 @@ FakesAssemblies/
 
 /.sonarqube
 coverage.opencover.xml
+
+# Environment variables
+.env
+.env.*
+
+# ASP.NET Core local configuration
+appsettings.Development.json
+appsettings.Local.json
+
+# User Secrets
+secrets.json
