@@ -10,5 +10,8 @@
     <Project Path="src/Shared/MyRecipeBook.Communication/MyRecipeBook.Communication.csproj" Id="515c69c8-84c2-4756-ad5e-5c6e233dc3c2" />
     <Project Path="src/Shared/MyRecipeBook.Exception/MyRecipeBook.Exception.csproj" Id="0d5db8f3-c242-4b28-9450-87dac5eecc98" />
   </Folder>
-  <Folder Name="/tests/" />
+  <Folder Name="/tests/">
+    <Project Path="tests/CommonTestUtilities/CommonTestUtilities.csproj" Id="d362fd15-0152-4a1e-95b2-27a8bd23458f" />
+    <Project Path="tests/Validators.Tests/Validators.Tests.csproj" Id="858448e1-a400-4ef1-bc2c-6b8ce2c8f829" />
+  </Folder>
 </Solution>
